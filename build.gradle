@@ -1,0 +1,44 @@
+// build.gradle
+
+// 1. 플러그인 설정: 이 프로젝트가 자바 프로젝트임을 명시합니다.
+plugins {
+    id 'java'
+}
+
+// 2. 그룹 및 버전 정보: 프로젝트의 기본 정보입니다. 원하는 대로 수정 가능합니다.
+group = 'com.example' // 보통 회사 도메인이나 개인 식별자를 역순으로 사용합니다.
+version = '1.0-SNAPSHOT' // 개발 중인 버전이라는 의미입니다.
+
+// 3. 자바 버전 설정: 어떤 버전의 자바로 코드를 작성하고 컴파일할지 지정합니다.
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// 4. 소스 인코딩 설정: 한글 주석 등이 깨지지 않도록 UTF-8로 설정합니다.
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+// 5. 라이브러리 저장소 설정: 필요한 라이브러리(의존성)를 어디서 다운로드할지 지정합니다.
+// mavenCentral()은 가장 널리 사용되는 공개 저장소입니다.
+repositories {
+    mavenCentral()
+}
+
+// 6. 의존성 설정: 이 프로젝트가 사용하는 라이브러리 목록입니다.
+dependencies {
+    // JUnit 5 (Jupiter) 테스트 프레임워크를 추가합니다.
+    // 'testImplementation'은 이 라이브러리가 테스트 코드에서만 사용된다는 의미입니다.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+
+    // (선택) AssertJ 라이브러리: JUnit의 기본 assert보다 더 풍부하고 읽기 쉬운 단언문을 제공합니다.
+    // 예: assertThat(result).isEqualTo(expected);
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+}
+
+// 7. 테스트 실행 설정: 테스트를 실행할 때 JUnit 5 플랫폼을 사용하도록 명시합니다.
+test {
+    useJUnitPlatform()
+}
